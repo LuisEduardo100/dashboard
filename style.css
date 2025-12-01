@@ -352,7 +352,8 @@ header {
 }
 
 /* DETALHAMENTO */
-#container-segmentacao {
+#container-segmentacao,
+#container-descarte {
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -367,7 +368,8 @@ header {
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-#container-segmentacao.active {
+#container-segmentacao.active,
+#container-descarte.active {
   max-height: 1500px;
   /* Aumentado para garantir conteúdo mobile */
   opacity: 1;

@@ -61,10 +61,23 @@
             <div class="sub-value" id="perc-convertidos">0.0%</div>
         </div>
 
-        <div class="kpi-card red">
+        <div class="kpi-card red clickable" onclick="toggleDescarte()" title="Ver motivos de descarte">
             <h3>Descartados</h3>
             <div class="value" id="display-descartados">0</div>
             <div class="sub-value" id="perc-descartados">0.0%</div>
+        </div>
+
+        <div class="widget-container widget-full" id="container-descarte">
+            <div class="widget-header">
+                <h4>Motivos de Descarte</h4>
+                <button onclick="toggleDescarte()"
+                    style="background:none; border:none; color:var(--text-secondary); cursor:pointer; padding:5px;">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="chart-wrapper chart-container-fix" style="height: 350px;">
+                <canvas id="motivosDescarteChart"></canvas>
+            </div>
         </div>
 
         <div class="widget-container widget-full" id="container-segmentacao">
@@ -93,7 +106,7 @@
 
         <div class="widget-container widget-full">
             <div class="widget-header">
-                <h4>Leads por Fonte (Agrupado)</h4>
+                <h4>Leads por Fonte</h4>
             </div>
             <div class="sources-grid" id="sources-container">
             </div>

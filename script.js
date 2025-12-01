@@ -9,6 +9,17 @@ const MOCK_DATA = {
     projeto: '72.2%',
   },
   segmentacao: { varejo_qtd: 350, projeto_qtd: 910, total_analisado: 1260 },
+  motivosDescarte: {
+    labels: [
+      'Preço fora do orçamento',
+      'Concorrente (Menor Preço)',
+      'Sem Estoque Imediato',
+      'Cliente parou de responder',
+      'Região não atendida',
+      'Lead Duplicado',
+    ],
+    data: [55, 32, 25, 20, 10, 5],
+  },
   graficoFontesDeals: {
     labels: [
       '51 Google',
@@ -183,6 +194,20 @@ const processedLabels = finalSourcesArray.map((i) => i.label);
 const processedData = finalSourcesArray.map((i) => i.val);
 
 // --- INTERFACE ---
+function toggleDescarte() {
+  const container = document.getElementById('container-descarte');
+
+  // Alterna classe
+  container.classList.toggle('active');
+
+  // Redimensiona chart
+  if (container.classList.contains('active')) {
+    setTimeout(() => {
+      if (window.motivosDescarteChart) window.motivosDescarteChart.resize();
+    }, 100);
+  }
+}
+
 function toggleSegmentacao() {
   const container = document.getElementById('container-segmentacao');
 
@@ -411,6 +436,55 @@ window.fontesDealsChart = new Chart(
             label: function (context) {
               return ` ${context.label}: ${context.raw}`;
             },
+          },
+        },
+      },
+    },
+  }
+);
+
+window.motivosDescarteChart = new Chart(
+  document.getElementById('motivosDescarteChart'),
+  {
+    type: 'bar',
+    data: {
+      labels: MOCK_DATA.motivosDescarte.labels,
+      datasets: [
+        {
+          label: 'Qtd. Leads',
+          data: MOCK_DATA.motivosDescarte.data,
+          // Usando a cor vermelha (#f46a6a) para manter consistência semântica com o card
+          backgroundColor: '#f46a6a',
+          borderRadius: 4,
+          barThickness: 'flex',
+          maxBarThickness: 30,
+        },
+      ],
+    },
+    options: {
+      indexAxis: 'y', // <--- ISTO FAZ AS BARRAS FICAREM HORIZONTAIS
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false }, // Esconde legenda pois só tem 1 dataset
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return ` ${context.raw} leads perdidos`;
+            },
+          },
+        },
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(166, 176, 207, 0.1)' },
+          ticks: { color: '#a6b0cf' },
+        },
+        y: {
+          grid: { display: false }, // Remove linhas verticais para ficar mais limpo
+          ticks: {
+            color: '#a6b0cf',
+            font: { weight: '500' }, // Destaca o motivo
           },
         },
       },
