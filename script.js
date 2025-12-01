@@ -506,6 +506,7 @@ document.getElementById('themeBtn').addEventListener('click', function () {
     window.fontesChart,
     window.segmentacaoChart,
     window.fontesDealsChart,
+    window.motivosDescarteChart,
   ].forEach((chart) => {
     if (chart) {
       chart.defaults.color = textColor;
